@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книга - Тепло наших рук</title>
+    
+    <!-- Подключаем шрифты Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------- Переменные и сброс ---------- */
+        :root {
+            --bg-color: #FCF4E1;
+            --text-color: #242424;
+            --accent-bg: #E3D2B9;
+            --btn-bg: #966B62;
+            --btn-text: #FADEAE;
+            --shadow: 0 8px 20px rgba(0,0,0,0.05);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Playfair Display', serif;
+            line-height: 1.6;
+            padding-bottom: 90px; /* Отступ для липкого меню */
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ---------- Буквица ---------- */
+        .dropcap {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.8rem;
+            float: left;
+            line-height: 0.8;
+            margin-right: 8px;
+            margin-top: 5px;
+            color: var(--btn-bg);
+        }
+
+        /* ---------- Картинки и Lightbox ---------- */
+        img {
+            max-width: 100%;
+            display: block;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s;
+            background: #e0d6c0; /* Placeholder цвет */
+        }
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Модальное окно для картинок */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            transform: scale(1);
+            border-radius: 8px;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 30px; right: 40px;
+            color: #fff; font-size: 40px;
+            cursor: pointer;
+            font-family: sans-serif;
+        }
+
+        /* ---------- Анимации появления ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal-left { transform: translateX(-60px); }
+        .reveal-right { transform: translateX(60px); }
+        .reveal.active {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        /* ---------- Секция Герой ---------- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px 0 20px;
+            gap: 20px;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+        .hero h1 span { font-weight: 400; font-style: italic; }
+        .hero-img {
+            max-width: 300px;
+            width: 100%;
+            margin: 10px auto;
+        }
+        
+        .btn-brown {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(150, 107, 98, 0.3);
+        }
+        .btn-brown:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* ---------- Декоративные разделители ---------- */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 40px 0 30px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--btn-bg);
+            margin: 10px auto 0;
+        }
+
+        /* ---------- Фрагменты (Карточки) ---------- */
+        .fragment-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .fragment-item {
+            background: #fff9f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .fragment-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        /* ---------- Маска текста (Скол) ---------- */
+        .text-mask-wrapper {
+            position: relative;
+            max-height: 120px; /* Высота скрытой части */
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+        }
+        .text-mask-wrapper.open {
+            max-height: 2000px; /* Раскрываем полностью */
+        }
+        .text-mask-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 60px;
+            background: linear-gradient(to top, #fff9f0 0%, transparent 100%);
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .text-mask-wrapper.open::after { opacity: 0; }
+
+        .read-more-btn {
+            display: block;
+            margin: 10px auto 0;
+            background: transparent;
+            border: 1px solid var(--btn-bg);
+            color: var(--btn-bg);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .read-more-btn:hover {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+        }
+
+        /* ---------- Содержание ---------- */
+        .content-list {
+            background: #fff9f0;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .content-list p { margin-bottom: 12px; }
+
+        /* ---------- Об авторе ---------- */
+        .about-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+            background: #fff9f0;
+            padding: 30px;
+            border-radius: var(--radius);
+        }
+        .about-author img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* ---------- Контакты / Подвал ---------- */
+        .footer {
+            background: var(--accent-bg);
+            padding: 40px 20px;
+            margin-top: 50px;
+            text-align: center;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        .footer h3 { margin-bottom: 15px; }
+        .footer a {
+            color: var(--btn-bg);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* ---------- Липкое меню ---------- */
+        /* Десктопная панель снизу */
+        .sticky-bar {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+        .sticky-bar .btn-brown { padding: 10px 35px; width: auto; }
+
+        /* Мобильная кнопка и меню */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px; right: 20px;
+            width: 55px; height: 55px;
+            background: var(--btn-bg);
+            color: #fff;
+            border: none; border-radius: 50%;
+            font-size: 30px; font-weight: 300;
+            box-shadow: 0 4px 15px rgba(150, 107, 98, 0.4);
+            z-index: 101;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .mobile-toggle.open { transform: rotate(45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 80px; right: 20px;
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            z-index: 100;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .mobile-menu.open { display: flex; }
+
+        /* ---------- Адаптивность ---------- */
+        @media (max-width: 768px) {
+            .sticky-bar { display: none; }
+            .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+            
+            .hero h1 { font-size: 2rem; }
+            .fragment-item img { height: 180px; }
+        }
+        
+        /* Планшеты: десктопное меню одной строкой, но с меньшими кнопками */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .sticky-bar { gap: 15px; }
+            .sticky-bar .btn-brown { padding: 10px 25px; }
+            .mobile-toggle { display: none; }
+        }
+
+        @media (min-width: 1025px) {
+            .sticky-bar .btn-brown { padding: 12px 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Герой -->
+        <section class="hero reveal">
+            <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Обложка книги" class="hero-img">
+            <h1>Книга<br><span>«Тепло наших рук»</span></h1>
+            <p>Исповедь сестёр милосердия</p>
+            <button class="btn-brown">К СОДЕРЖАНИЮ</button>
+        </section>
+
+        <!-- Вступление -->
+        <section class="reveal">
+            <p><span class="dropcap">Д</span>ушевные истории о современном госпитале и его обитателях. О человечности, о достоинстве и уязвимости. О простых делах, и о маленьких чудесах, которые случаются каждый день.</p>
+        </section>
+
+        <!-- Фрагменты -->
+        <h2 class="section-title reveal">Фрагменты</h2>
+        <div class="fragment-grid">
+            <!-- Фрагмент 1 -->
+            <div class="fragment-item reveal reveal-left">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" alt="Фрагмент 1">
+                <div class="text-mask-wrapper">
+                    <p><span class="dropcap">У</span> неё жизнь меняет не драматическое событие или судьбоносная встреча, а обычное объявление на стене.</p>
+                </div>
+                <button class="read-more-btn">Читать далее</button>
+            </div>
+
+            <!-- Фрагмент 2 -->
+            <div class="fragment-item reveal reveal-right">
+                <img src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=600&q=80" alt="Фрагмент 2">
+                <div class="text-mask-wrapper">
+                    <p><span class="dropcap">О</span>н неделю сидел в «слепой норе» и всё, что ел — снег. А потом подарил ей апельсин...</p>
+                </div>
+                <button class="read-more-btn">Читать далее</button>
+            </div>
+
+            <!-- Фрагмент 3 -->
+            <div class="fragment-item reveal reveal-left">
+                <img src="https://images.unsplash.com/photo-1516541196182-6fcd0b512d96?auto=format&fit=crop&w=600&q=80" alt="Фрагмент 3">
+                <div class="text-mask-wrapper">
+                    <p><span class="dropcap">У</span> неё есть способность менять жизни людей. Она видит то, что скрыто от глаз других. И даже когда кажется, что надежды нет, она находит путь к сердцу.</p>
+                </div>
+                <button class="read-more-btn">Читать далее</button>
+            </div>
+        </div>
+
+        <!-- Содержание -->
+        <h2 class="section-title reveal">Содержание</h2>
+        <div class="content-list reveal">
+            <div class="text-mask-wrapper">
+                <p>От автора. Зачем эта книга написана и кому посвящена?</p>
+                <p>Спор и палата (Вместо предисловия)</p>
+                <p><strong>Часть 1. Первые шаги</strong></p>
+                <p>Глава 1. С чего всё начиналось. Как зародилась идея идти в госпиталь?</p>
+                <p>Глава 2. Говорит сестра. «Как ты стала сестрой милосердия/волонтером? Что сподвигло тебя сюда?»</p>
+                <p>Глава 3. Мой первый день. Атмосфера, первое знакомство с госпиталем, эмоции — от страха и растерянности до осознания и чувства нужности.</p>
+                <p><strong>Глава 4. «Волшебник из страны Оз» — из дневника сестры Алисы</strong></p>
+                <p>Глава 5. Как все устроено</p>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>У истоков (рассказ опытной сестры)</li>
+                    <li>Наши обязанности</li>
+                    <li>Что нам можно?</li>
+                    <li>Чего мы не можем?</li>
+                    <li>Можно ли купить......?</li>
+                </ul>
+            </div>
+            <button class="read-more-btn">Читать далее</button>
+        </div>
+
+        <!-- Почему я решила -->
+        <h2 class="section-title reveal">Почему я решила написать эту книгу</h2>
+        <div class="reveal">
+            <div class="text-mask-wrapper">
+                <p><span class="dropcap">П</span>отому что я ушла из госпиталя, но он не ушёл из меня.</p>
+                <p>На курсах по писательскому мастерству и продвижению книг часто повторяют один и тот же совет: «Рассказывайте личный бренд».</p>
+                <p>«Развивайте личный бренд».</p>
+                <p>«Рассказывайте больше о себе».</p>
+                <p>«Людям интересен автор».</p>
+                <p>Но каждый раз я долго сидела на этом совете. Ведь когда речь идёт о госпитале и его пациентах, об уходе и заботе, твоя история — лишь маленькая часть огромного мира, который тебе доверили.</p>
+            </div>
+            <button class="read-more-btn">Читать далее</button>
+        </div>
+
+        <!-- Об авторе -->
+        <h2 class="section-title reveal">Об авторе</h2>
+        <div class="about-author reveal">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Марфа Соболева">
+            <h3>Марфа Соболева</h3>
+            <p>более 12 лет посвящает себя волонтерству и социальным проектам и писательству.</p>
+        </div>
+    </div>
+
+    <!-- Контакты/Футер -->
+    <footer class="footer reveal">
+        <h3>Контакты</h3>
+        <p>электронная почта: <a href="mailto:info@kupidomia.com">info@kupidomia.com</a></p>
+        <p>Телефон: <a href="tel:8986627899">8 986 627 899</a> (вотсап)</p>
+        <p style="margin-top: 10px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <a href="#" style="border-bottom: 1px solid;">Предзаказ!</a> 
+            <a href="#" style="border-bottom: 1px solid;">Купить электронную книгу</a>
+        </p>
+    </footer>
+
+    <!-- Липкое меню -->
+    <!-- Десктопная панель -->
+    <div class="sticky-bar">
+        <button class="btn-brown">Предзаказ!</button>
+        <button class="btn-brown">Купить электронную книгу</button>
+    </div>
+
+    <!-- Мобильная кнопка -->
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Открыть меню">+</button>
+    <!-- Мобильное выпадающее меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="btn-brown" style="width: 100%;">Предзаказ!</button>
+        <button class="btn-brown" style="width: 100%;">Купить эл. книгу</button>
+    </div>
+
+    <!-- Модальное окно для фото -->
+    <div class="lightbox" id="lightbox">
+        <span class="close" id="lightboxClose">&times;</span>
+        <img id="lightboxImg" src="" alt="Увеличенное изображение">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Анимация появления (Scroll Reveal)
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            revealElements.forEach(el => observer.observe(el));
+
+            // 2. Маска и кнопка "Читать далее"
+            const readMoreBtns = document.querySelectorAll('.read-more-btn');
+            readMoreBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const wrapper = this.parentElement.querySelector('.text-mask-wrapper');
+                    if (wrapper) {
+                        wrapper.classList.toggle('open');
+                        this.textContent = wrapper.classList.contains('open') ? 'Скрыть' : 'Читать далее';
+                    }
+                });
+            });
+
+            // 3. Lightbox (Увеличение картинок по клику)
+            const images = document.querySelectorAll('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            images.forEach(img => {
+                img.addEventListener('click', function(e) {
+                    // Исключаем маленькие иконки (если нужно, можно добавить фильтр по классу)
+                    // Для всех картинок в макете:
+                    lightbox.classList.add('active');
+                    lightboxImg.src = this.src;
+                    document.body.style.overflow = 'hidden'; // Убираем скролл
+                });
+            });
+
+            const closeLightbox = () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === this) closeLightbox();
+            });
+
+            // 4. Мобильное липкое меню
+            const mobileToggle = document.getElementById('mobileToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            mobileToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('open');
+                this.classList.toggle('open');
+            });
+
+            // Если кликнуть на кнопку в мобильном меню, закрываем его
+            mobileMenu.querySelectorAll('.btn-brown').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    mobileToggle.classList.remove('open');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
