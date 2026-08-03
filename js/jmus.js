@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 2. Сопоставляем ID с путями к аудиофайлам
     const audioMap = {
-        'music': 'files/mus-hor.mp3',
+        'music': 'files/mus-hor.mp3'
        // 'happy': 'files/happy.mp3',
        // 'calm': 'files/calm.mp3',
        // 'alert': 'files/alert.mp3'
