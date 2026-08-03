@@ -1,0 +1,825 @@
+/* ======================================================
+   RESET
+====================================================== */
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    min-width:320px;
+
+    background:#fcf5e5;
+
+    color:#43342C;
+
+    font-family:"Playfair Display",serif;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    overflow-x:hidden;
+
+    text-rendering:optimizeLegibility;
+
+    -webkit-font-smoothing:antialiased;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font:inherit;
+
+}
+
+ul,
+ol{
+
+    list-style:none;
+
+}
+
+
+/* ======================================================
+   VARIABLES
+====================================================== */
+
+:root{
+
+    --bg:#F5EFE5;
+
+    --paper:#fcf5e5;
+
+    --text:#44362D;
+
+    --accent:#A78047;
+
+    --accent-dark:#8B6735;
+
+    --border:#DDD0BE;
+
+    --shadow:0 15px 40px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+    --container:1180px;
+
+}
+
+
+/* ======================================================
+   CONTAINER
+====================================================== */
+
+.container{
+
+    width:min(var(--container),calc(100% - 64px));
+
+    margin-inline:auto;
+
+}
+
+
+/* ======================================================
+   PROGRESS BAR
+====================================================== */
+
+.progress{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:4px;
+
+    background:transparent;
+
+    z-index:9999;
+
+}
+
+.progress__bar{
+
+    width:0;
+
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        #A78047,
+        #D6B16A
+    );
+
+    transition:width .15s linear;
+
+}
+
+
+/* ======================================================
+   HERO
+====================================================== */
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:90px 0;
+
+}
+
+.hero__content{ z-index: 100; }
+
+.hero__container{
+
+    display:grid;
+
+    grid-template-columns:
+        480px
+        1fr;
+
+    gap:90px;
+
+    align-items:center;
+
+}
+
+.hero__image{
+
+    position:relative;
+
+}
+
+.hero__image img{
+
+    width:100%;
+
+    border-radius:24px;
+
+ /*   box-shadow:var(--shadow);*/
+
+    cursor:pointer;
+
+    transition:.4s;
+
+}
+
+/*.hero__image img:hover{
+
+    transform:translateY(-6px);
+
+}
+*/
+
+.hero__author{
+
+    display:block;
+
+    font-size:22px;
+
+    letter-spacing:.12em;
+
+    color:var(--accent);
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+
+}
+
+.hero h1{
+
+    font-size:72px;
+
+    line-height:1.1;
+
+    font-weight:600;
+
+    margin-bottom:14px;
+
+}
+
+.hero h2{
+
+    font-size:34px;
+
+    font-weight:400;
+
+    color:#735741;
+
+    margin-bottom:36px;
+
+}
+
+.hero__description{
+
+    max-width:640px;
+
+    margin-bottom:48px;
+
+    font-size:22px;
+
+    line-height:1.9;
+
+}
+
+.ornament{
+
+    width:230px;
+
+    margin:-10px 0 36px;
+
+}
+
+
+/* ======================================================
+   BUTTONS
+====================================================== */
+
+.button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:220px;
+
+    height:60px;
+
+    padding:0 34px;
+
+    border-radius:999px;
+
+    background:var(--accent);
+
+    color:#fff;
+
+    font-size:18px;
+
+    transition:
+        transform .25s,
+        background .25s,
+        box-shadow .25s;
+
+    box-shadow:
+        0 12px 30px rgba(167,128,71,.25);
+
+}
+
+.button:hover{
+
+    background:var(--accent-dark);
+
+    transform:translateY(-3px);
+
+}
+
+.button:active{
+
+    transform:scale(.98);
+
+}
+
+.button--outline{
+
+    background:transparent;
+
+    border:1px solid var(--accent);
+
+    color:var(--accent);
+
+    box-shadow:none;
+
+}
+
+.button--outline:hover{
+
+    background:var(--accent);
+
+    color:#fff;
+
+}
+
+/* ======================================================
+   SECTIONS
+====================================================== */
+
+.section{
+
+    padding:120px 0;
+
+    position:relative;
+
+}
+
+.section:nth-child(even){
+
+    background:#F8F2E8;
+
+}
+
+.section__title{
+
+    text-align:center;
+
+    font-size:54px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+    margin-bottom:24px;
+
+}
+
+.section>.container>.ornament{
+
+    margin-inline:auto;
+
+    margin-bottom:60px;
+
+}
+
+
+/* ======================================================
+   TEXT CARD
+====================================================== */
+
+.text-box{
+
+    position:relative;
+
+    max-width:920px;
+
+    margin-inline:auto;
+
+    padding:48px;
+
+    background:var(--paper);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+}
+
+.text-box p{
+
+    margin-bottom:24px;
+
+}
+
+.text-box p:last-child{
+
+    margin-bottom:0;
+
+}
+
+
+/* ======================================================
+   DROP CAP
+====================================================== */
+
+.text-box p::first-letter{
+
+    float:left;
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:4.6rem;
+
+    line-height:.72;
+
+    margin-right:12px;
+
+    margin-top:12px;
+
+    color:var(--accent);
+
+}
+
+
+/* ======================================================
+   SCROLLABLE TEXT
+====================================================== */
+
+.text-box--scroll{
+
+    max-height:720px;
+
+    overflow-y:auto;
+
+    padding-right:28px;
+
+    scrollbar-width:thin;
+
+    scrollbar-color:var(--accent) transparent;
+
+}
+
+.text-box--scroll::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.text-box--scroll::-webkit-scrollbar-thumb{
+
+    background:var(--accent);
+
+    border-radius:99px;
+
+}
+
+.text-box--scroll::after{
+
+    content:"";
+
+    position:sticky;
+
+    display:block;
+
+    bottom:-48px;
+
+    left:0;
+
+    width:100%;
+
+    height:120px;
+
+    pointer-events:none;
+
+    background:linear-gradient(
+
+        transparent,
+
+        var(--paper)
+
+    );
+
+}
+
+
+/* ======================================================
+   CONTENTS
+====================================================== */
+
+.contents-list{
+
+    counter-reset:item;
+
+}
+
+.contents-list li{
+
+    position:relative;
+
+    padding-left:52px;
+
+    margin-bottom:18px;
+
+    font-size:22px;
+
+}
+
+.contents-list li::before{
+
+    counter-increment:item;
+
+    content:counter(item);
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:34px;
+
+    height:34px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--accent);
+
+    color:#fff;
+
+    font-size:16px;
+
+}
+
+
+/* ======================================================
+   AUTHOR
+====================================================== */
+
+.author{
+
+    display:grid;
+
+    grid-template-columns:340px 1fr;
+
+    gap:80px;
+
+    align-items:center;
+
+}
+
+.author__photo img{
+
+    width:100%;
+
+    border-radius:100%;
+
+    box-shadow:var(--shadow);
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.author__photo img:hover{
+
+    transform:scale(1.02);
+
+}
+
+.author__content{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+
+/* ======================================================
+   BUY
+====================================================== */
+
+.buy__buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:24px;
+
+}
+
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+.footer{
+
+    padding:80px 0 120px;
+
+    text-align:center;
+
+    border-top:1px solid var(--border);
+
+    position: relative;
+
+    z-index: 100;
+
+}
+
+.footer p{
+
+    margin:8px 0;
+
+    color:#7B6755;
+
+}
+
+
+/* ======================================================
+   STICKY MOBILE NAV
+====================================================== */
+
+.mobile-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    height:72px;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:space-around;
+
+    background:rgba(248,242,232,.96);
+
+    backdrop-filter:blur(18px);
+
+    border-top:1px solid var(--border);
+
+    z-index:900;
+
+}
+
+.mobile-nav a{
+
+    font-size:15px;
+
+    color:#6B5643;
+
+    transition:.25s;
+
+}
+
+.mobile-nav a.active{
+
+    color:var(--accent);
+
+    font-weight:600;
+
+}
+
+
+/* ======================================================
+   FAB
+====================================================== */
+
+.fab{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:96px;
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    color:#fff;
+
+    font-size:34px;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+
+    transition:.3s;
+
+    z-index:950;
+
+}
+
+.fab:hover{
+
+    transform:translateY(-4px);
+
+}
+
+
+/* ======================================================
+   REVEAL ANIMATION
+====================================================== */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(50px);
+
+    transition:
+
+        opacity .8s ease,
+
+        transform .8s ease;
+
+}
+
+.reveal.visible{
+
+    opacity:1;
+
+    transform:none;
+
+}
+
+
+/* ======================================================
+   LIGHTBOX
+====================================================== */
+
+.lightbox{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(0,0,0,.82);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.35s;
+
+    z-index:99999;
+
+}
+
+.lightbox.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.lightbox img{
+
+    max-width:min(90vw,1000px);
+
+    max-height:90vh;
+
+    border-radius:18px;
+
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+
+    cursor:zoom-out;
+
+}
