@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Считываем параметр track из URL
     const urlParams = new URLSearchParams(window.location.search);
-    const trackId = urlParams.get('track') || 'music';
-
+    const trackId = urlParams.get('track');
+console(trackId);
     // 2. Сопоставляем ID с путями к аудиофайлам
     const audioMap = {
         'music': 'files/mus-hor.mp3'
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
        // 'calm': 'files/calm.mp3',
        // 'alert': 'files/alert.mp3'
     };
-    const src = audioMap[trackId] || audioMap['music'];
+    const src = audioMap[trackId];
 
     // 3. Создаём аудио-объект
     const audio = new Audio(src);
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Автозапуск заблокирован – ждём первого клика/касания
                 const startOnInteraction = () => {
                     audio.play().catch(e => console.warn('Ошибка воспроизведения:', e));
+                  
                     document.removeEventListener('click', startOnInteraction);
                     document.removeEventListener('touchstart', startOnInteraction);
                 };
