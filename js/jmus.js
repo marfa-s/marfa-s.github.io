@@ -15,7 +15,7 @@ console(trackId);
     // 3. Создаём аудио-объект
     const audio = new Audio(src);
     audio.loop = false;   // можно включить зацикливание при необходимости
-    audio.volume = 0.8;
+    audio.volume = 0.6;
 
     // 4. Функция запуска воспроизведения
     function playAudio() {
