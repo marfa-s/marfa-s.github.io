@@ -24,6 +24,7 @@ console.log(trackId);
             playPromise.catch(() => {
                 // Автозапуск заблокирован – ждём первого клика/касания
                 const startOnInteraction = () => {
+                  document.getElementById('playB').classList.add('lightbox', 'active');
                     audio.play().catch(e => console.warn('Ошибка воспроизведения:', e));
                   
                     document.removeEventListener('click', startOnInteraction);
