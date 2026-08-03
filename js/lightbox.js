@@ -30,10 +30,10 @@ function initLightbox() {
 
 
 
-    lightbox.addEventListener('click', () => {
-
-        lightbox.classList.remove('active');
-
+    lightbox.addEventListener('click', (e) => {
+ if (e.target.classList.contains('.lightbox')) {   
+            lightbox.classList.remove('active');
+  }
     });
 
 
