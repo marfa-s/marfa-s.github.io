@@ -191,6 +191,13 @@
         padding:36px;
 
     }
+    .fboxi {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 20px;
+        flex-direction: column;
+    }
 
 }
 
@@ -206,6 +213,13 @@
     /* box-shadow: var(--shadow); */
     cursor: pointer;
     transition: .4s;
+    }
+    .fboxi {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 20px;
+        flex-direction: row;
     }
 }
 
