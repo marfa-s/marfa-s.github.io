@@ -198,6 +198,13 @@
         padding-bottom: 20px;
         flex-direction: column;
     }
+       .fboxi2 {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 20px;
+        flex-direction: column-reverse;
+    }
 
 }
 
@@ -215,6 +222,13 @@
     transition: .4s;
     }
     .fboxi {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 20px;
+        flex-direction: row;
+    }
+       .fboxi2 {
         display: flex;
         align-items: center;
         gap: 16px;
