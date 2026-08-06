@@ -205,6 +205,9 @@
         padding-bottom: 20px;
         flex-direction: column-reverse;
     }
+    .wimgo {
+        width: 100%;
+    }
 
 }
 
@@ -234,6 +237,9 @@
         gap: 16px;
         padding-bottom: 20px;
         flex-direction: row;
+    }
+    .wimgo {
+        width: 50%;
     }
 }
 
