@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					document.removeEventListener('click', startOnInteraction);
                     document.removeEventListener('touchstart', startOnInteraction);
                 };
-				document.getElementById("playB").classList.add('active');
+			
                 document.addEventListener('click', startOnInteraction, { once: true });
                 document.addEventListener('touchstart', startOnInteraction, { once: true });
             });
