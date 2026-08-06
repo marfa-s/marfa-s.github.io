@@ -232,7 +232,7 @@ ol{
 
 .hero h1{
 
-    font-size:72px;
+    font-size: 62.5px;
 
     line-height:1.1;
 
@@ -240,6 +240,12 @@ ol{
 
     margin-bottom:14px;
 
+}
+
+.hero h1::first-letter {
+    font-family: "Great Vibes", cursive;
+    font-size: calc(1em + 60%);
+    font-weight: 570;
 }
 
 .hero h2{
