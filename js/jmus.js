@@ -2,7 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. Считываем параметр track из URL
     const urlParams = new URLSearchParams(window.location.search);
     const trackId = urlParams.get('track');
-  console.log(trackId);
+	 if (trackId=="true") {
+	console.log(trackId);
+	document.getElementById("playB").setAttribute("style", "display: block;");
+	document.getElementById("playB").click();
+	return;
+	}
+	else {
+	  return;
+	}
     // 2. Сопоставляем ID с путями к аудиофайлам
     const audioMap = {
         'music': 'files/mus-hor.mp3'
